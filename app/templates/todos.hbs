@@ -1,18 +1,19 @@
-{{input tpye="text" id="new-todo" placeholder="What needs to be done?"}}
+{{input tpye="text" id="new-todo" placeholder="What needs to be done?"
+value=newTitle action="createTodo"}}
 
 <section id="main">
-  {{outlet}}
-
   <ul id="todo-list">
     <li class="completed">
       <input type="checkbox" class="toggle">
       <label>Learn Ember</label>
     </li>
 
-    <li>
+    {{#each}}
+    <li {{bind-attr class="isComplated:completed"}}>
       <input type="checkbox" class="toggle">
-      <label>This is some other stuff!</label><button class="destroy"></button>
+      <label>{{title}}</label><button class="destroy"></button>
     </li>
+    {{/each}}
   </ul>
 
   <input type="checkbox" id="toggle-all">
@@ -22,6 +23,7 @@
   <span id="count">
     <strong>2</strong> todos left
   </span>
+  {{#each}}
   <ul id="filters">
     <li>
       <a href="all" class="selected">All</a>
@@ -35,6 +37,7 @@
       <a href="completed">Completed</a>
     </li>
   </ul>
+  {{/each}}
 
   <button id="clear-completed">
     Clear completed (1)
