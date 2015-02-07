@@ -8,11 +8,17 @@ value=newTitle action="createTodo"}}
       <label>Learn Ember</label>
     </li>
 
-    {{#each}}
-    <li {{bind-attr class="isComplated:completed"}}>
-      <input type="checkbox" class="toggle">
-      <label>{{title}}</label><button class="destroy"></button>
-    </li>
+    {{#each itemController="todo"}}
+      <li {{bind-attr class="isComplated:completed isEditing:editing"}}>
+        {{#if isEditing}}
+          {{input type="text" class="edit" value=title
+          focus-out="acceptChanges" insert-newline="acceptChanges"}}
+        {{else}}
+          {{input type="checkbox" checked="isCompleted" class="toggle"}}
+          <label {{action "editTodo" on="doubleClick"}}>{{title}}</label>
+          <button class="destroy"></button>
+        {{/if}}
+      </li>
     {{/each}}
   </ul>
 
@@ -23,7 +29,6 @@ value=newTitle action="createTodo"}}
   <span id="count">
     <strong>2</strong> todos left
   </span>
-  {{#each}}
   <ul id="filters">
     <li>
       <a href="all" class="selected">All</a>
@@ -37,8 +42,6 @@ value=newTitle action="createTodo"}}
       <a href="completed">Completed</a>
     </li>
   </ul>
-  {{/each}}
-
   <button id="clear-completed">
     Clear completed (1)
   </button>
